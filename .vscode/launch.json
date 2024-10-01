@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<05_first_steps>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.estudos.__first_steps.Application",
+            "projectName": "05_first_steps",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
