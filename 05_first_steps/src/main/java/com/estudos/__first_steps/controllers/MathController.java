@@ -1,6 +1,6 @@
 package com.estudos.__first_steps.controllers;
 
-import java.util.concurrent.atomic.AtomicLong;
+// import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RestController
 public class MathController {
 
-    private final AtomicLong counter = new AtomicLong();
+    // private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sum(@PathVariable(value = "numberOne") String numberOne,
@@ -23,11 +23,19 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
-    private Double convertToDouble(String strNumber){
-        return null;
+    private Double convertToDouble(String strNumber) {
+        if (strNumber == null)
+            return 0D;
+        String number = strNumber.replaceAll(",", ".");
+        if (IsNumeric(number))
+            return Double.parseDouble(number);
+        return 0D;
     }
-    
+
     private boolean IsNumeric(String strNumber) {
-        return false;
+        if (strNumber == null) return false;
+        String number = strNumber.replaceAll(",", ".");
+
+        return number.matches("[-+]?[0-9]*\\.?[0-9]+");
     }
 }
