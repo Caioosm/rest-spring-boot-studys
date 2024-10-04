@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.estudos.__first_steps.exceptions.ExceptionResponse;
-import com.estudos.__first_steps.exceptions.UnsupportedMathOperationException;
+import com.estudos.__first_steps.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController
@@ -29,14 +29,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     //Método para exceção específica para operações não suportadas, como por exemplo passar uma letra no parâmetro ao invés de um número
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest wRequest) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest wRequest) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
             new Date(), 
             ex.getMessage(),
             wRequest.getDescription(false)
         );
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
 }
