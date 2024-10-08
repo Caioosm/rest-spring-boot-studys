@@ -1,6 +1,7 @@
 package com.estudos.__first_steps.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,6 +30,8 @@ public class Person implements Serializable{
 
     @Column(nullable = false, length = 6)
     private String gender;
+
+    private Date birthDay;
 
     public Person(){}
 
@@ -72,15 +75,24 @@ public class Person implements Serializable{
         this.gender = gender;
     }
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((address == null) ? 0 : address.hashCode());
         result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((birthDay == null) ? 0 : birthDay.hashCode());
         return result;
     }
 
@@ -93,7 +105,10 @@ public class Person implements Serializable{
         if (getClass() != obj.getClass())
             return false;
         Person other = (Person) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
         if (firstName == null) {
             if (other.firstName != null)
@@ -115,10 +130,11 @@ public class Person implements Serializable{
                 return false;
         } else if (!gender.equals(other.gender))
             return false;
+        if (birthDay == null) {
+            if (other.birthDay != null)
+                return false;
+        } else if (!birthDay.equals(other.birthDay))
+            return false;
         return true;
     }
-
-  
-
-    
 }
