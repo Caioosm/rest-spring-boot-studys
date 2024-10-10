@@ -1,39 +1,19 @@
-package com.estudos.__first_steps.model;
+package com.estudos.__first_steps.DTO;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "person")
-public class Person implements Serializable{
+public class PersonVO implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
-
-    @Column(nullable = false, length = 100)
     private String address;
-
-    @Column(nullable = false, length = 6)
     private String gender;
-
     private Date birthDay;
 
-    public Person(){}
+    public PersonVO(){}
 
     public long getId() {
         return id;
@@ -104,7 +84,7 @@ public class Person implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Person other = (Person) obj;
+        PersonVO other = (PersonVO) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -137,4 +117,7 @@ public class Person implements Serializable{
             return false;
         return true;
     }
+
+    
+    
 }
