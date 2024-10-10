@@ -3,6 +3,10 @@ package com.estudos.__first_steps.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@JsonPropertyOrder({"id", "Nome", "Sobrenome", "Genero", "Endereco"})
 @Entity
 @Table(name = "person")
 public class Person implements Serializable{
@@ -19,18 +24,23 @@ public class Person implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("Nome")
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
-
+    
+    @JsonProperty("Sobrenome")
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
-
+    
+    @JsonProperty("Endereço")
     @Column(nullable = false, length = 100)
     private String address;
-
+    
+    @JsonProperty("Genero")
     @Column(nullable = false, length = 6)
     private String gender;
 
+    @JsonIgnore
     private Date birthDay;
 
     public Person(){}
