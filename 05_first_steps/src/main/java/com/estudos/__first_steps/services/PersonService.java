@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
+import com.estudos.__first_steps.controllers.PersonController;
 import com.estudos.__first_steps.exceptions.ResourceNotFoundException;
 import com.estudos.__first_steps.model.Person;
 import com.estudos.__first_steps.repositories.PersonRepository;
@@ -23,35 +26,49 @@ public class PersonService {
 
         logger.info("finding one person");
         
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
+        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
+        entity.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+
+        return entity;
     }
 
     //método para encontrar todos os usuários
     public List<Person> findAll(){
         logger.info("finding all persons");
 
-        return repository.findAll();
+        var persons = repository.findAll();
+
+        persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+
+        return persons;
     }
 
     //Método para criar um novo usuário
     public Person create(Person person){
         logger.info("Creating one person");
         
-        return repository.save(person);
+        var entity = repository.save(person);
+        entity.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+
+        return entity;
     }
 
     //Método para atualizar um usuário
     public Person update(Person person){
         logger.info("Updating one person");
         
-        Person entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
+        Person pe = repository.findById(person.getKey()).orElseThrow(() -> new ResourceNotFoundException("No record found for this ID!"));
 
-        entity.setFirstName(person.getFirstName());
-        entity.setLastName(person.getLastName());
-        entity.setAddress(person.getAddress());
-        entity.setGender(person.getGender());
+        pe.setFirstName(person.getFirstName());
+        pe.setLastName(person.getLastName());
+        pe.setAddress(person.getAddress());
+        pe.setGender(person.getGender());
         
-        return repository.save(person);
+        var entity = repository.save(person);
+
+        entity.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+
+        return entity;
     }
 
     //Método para deletar um usuário por ID
