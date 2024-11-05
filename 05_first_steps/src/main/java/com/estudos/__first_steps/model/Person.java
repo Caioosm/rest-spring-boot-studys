@@ -16,10 +16,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@JsonPropertyOrder({"id", "Nome", "Sobrenome", "Genero", "Endereco"})
+@JsonPropertyOrder({ "id", "Nome", "Sobrenome", "Genero", "Endereco" })
 @Entity
 @Table(name = "person")
-public class Person extends RepresentationModel<Person> implements Serializable{
+public class Person extends RepresentationModel<Person> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -31,15 +31,15 @@ public class Person extends RepresentationModel<Person> implements Serializable{
     @JsonProperty("Nome")
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
-    
+
     @JsonProperty("Sobrenome")
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
-    
+
     @JsonProperty("Endereço")
     @Column(nullable = false, length = 100)
     private String address;
-    
+
     @JsonProperty("Genero")
     @Column(nullable = false, length = 6)
     private String gender;
@@ -47,8 +47,8 @@ public class Person extends RepresentationModel<Person> implements Serializable{
     @JsonIgnore
     private Date birthDay;
 
-    public Person(){}
-
+    public Person() {
+    }
 
     public Long getKey() {
         return key;
@@ -98,7 +98,6 @@ public class Person extends RepresentationModel<Person> implements Serializable{
         this.birthDay = birthDay;
     }
 
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -111,7 +110,6 @@ public class Person extends RepresentationModel<Person> implements Serializable{
         result = prime * result + ((birthDay == null) ? 0 : birthDay.hashCode());
         return result;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -155,5 +153,4 @@ public class Person extends RepresentationModel<Person> implements Serializable{
         return true;
     }
 
-    
 }
